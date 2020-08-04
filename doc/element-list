@@ -1,0 +1,13 @@
+com.grizzi.microservices.users
+com.grizzi.microservices.users.config
+com.grizzi.microservices.users.controllers
+com.grizzi.microservices.users.exceptions
+com.grizzi.microservices.users.models
+com.grizzi.microservices.users.models.errors
+com.grizzi.microservices.users.models.errors.badrequest
+com.grizzi.microservices.users.models.errors.forbidden
+com.grizzi.microservices.users.models.errors.notfound
+com.grizzi.microservices.users.repositories
+com.grizzi.microservices.users.services
+com.grizzi.microservices.users.utils
+com.grizzi.users

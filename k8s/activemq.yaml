@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: activemq
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+         app: activemq
+   template:
+      metadata:
+         labels:
+            app: activemq
+      spec:
+         containers:
+         -  name: activemq
+            image: rmohr/activemq:5.15.9
+            imagePullPolicy: IfNotPresent
+            ports:
+            -  containerPort: 8161
+               name: admin
+            -  containerPort: 61616
+               name: broker
+            resources:
+               limits:
+                  memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: activemq
+spec:
+   selector:
+      app: activemq
+   ports:
+   -  name: admin
+      protocol: TCP
+      port: 8161
+      targetPort: 8161
+   -  name: broker
+      protocol: TCP
+      port: 61616

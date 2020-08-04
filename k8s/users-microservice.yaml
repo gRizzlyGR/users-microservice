@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-microservice
+  template:
+    metadata:
+      labels:
+        app: users-microservice
+    spec:
+      containers:
+      - name: users-microservice
+        image: users-microservice
+        imagePullPolicy: Never
+        env:
+        - name: ACTIVEMQ_BROKER_URL
+          value: "tcp://activemq:61616"
+        ports:
+          - containerPort: 8081
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          httpGet:
+            path: /actuator/health
+            port: 8081
+        resources:
+          limits:
+            memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-microservice
+spec:
+  ports:
+  - nodePort: 31000
+    port: 8081
+    targetPort: 8081
+  selector:
+    app: users-microservice
+  type: NodePort
